@@ -65,9 +65,8 @@ resource "null_resource" "link_monitoring" {
     command = <<EOT
       # Login to Azure CLI (Linux operating system assumed)
       az login --service-principal -u $con_client_id -p $con_client_secret --tenant $con_tenant_id
-      # TODO your scripting code
       az webapp config appsettings set --name $web_app_name --resource-group $rg_name --settings APPINSIGHTS_INSTRUMENTATIONKEY=$inst_key APPINSIGHTS_PROFILERFEATURE_VERSION=1.0.0 APPINSIGHTS_SNAPSHOTFEATURE_VERSION=1.0.0 APPLICATIONINSIGHTS_CONNECTION_STRING=$conn_str ApplicationInsightsAgent_EXTENSION_VERSION=~3 DiagnosticServices_EXTENSION_VERSION=~3 InstrumentationEngine_EXTENSION_VERSION=disabled SnapshotDebugger_EXTENSION_VERSION=disabled XDT_MicrosoftApplicationInsights_BaseExtensions=recommended XDT_MicrosoftApplicationInsights_PreemptSdk=disabled
-   EOT
+    EOT
     environment = {
       // Parameters needed to login
       con_client_id     = var.client_id
@@ -75,7 +74,7 @@ resource "null_resource" "link_monitoring" {
       con_tenant_id     = var.tenant_id
       // Parameters needed for linking
       inst_key          = azurerm_application_insights.appi.instrumentation_key
-      conn_str          = azurerm_application_insights.appi.connection_string     
+      conn_str          = azurerm_application_insights.appi.connection_string 
       rg_name           = data.azurerm_resource_group.wsdevops.name
       web_app_name      = var.web_app_name
     }
