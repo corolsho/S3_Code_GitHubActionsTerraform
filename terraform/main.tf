@@ -53,7 +53,7 @@ resource "azurerm_log_analytics_workspace" "log" {
   retention_in_days   = 30
 }
 resource "azurerm_application_insights" "appi" {
-  name                = "conrol123-api"
+  name                = "conrol123-appi"
   location            = data.azurerm_resource_group.wsdevops.location
   resource_group_name = data.azurerm_resource_group.wsdevops.name
   workspace_id        = azurerm_log_analytics_workspace.log.id
@@ -74,9 +74,9 @@ resource "null_resource" "link_monitoring" {
       con_client_secret = var.client_secret
       con_tenant_id     = var.tenant_id
       // Parameters needed for linking
-      inst_key          = var.azurerm_application_insights.appi.instrumentation_key
-      conn_str          = var.azurerm_application_insights.appi.connection_string     
-      rg_name           = var.rg_name
+      inst_key          = azurerm_application_insights.appi.instrumentation_key
+      conn_str          = azurerm_application_insights.appi.connection_string     
+      rg_name           = data.azurerm_resource_group.wsdevops.name
       web_app_name      = var.web_app_name
     }
   }
