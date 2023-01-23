@@ -53,7 +53,7 @@ resource "azurerm_log_analytics_workspace" "log" {
   retention_in_days   = 30
 }
 resource "azurerm_application_insights" "appi" {
-  name                = "conrol123-appi"
+  name                = "conrol123-api"
   location            = data.azurerm_resource_group.wsdevops.location
   resource_group_name = data.azurerm_resource_group.wsdevops.name
   workspace_id        = azurerm_log_analytics_workspace.log.id
